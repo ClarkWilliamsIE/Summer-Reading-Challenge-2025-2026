@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Signup - Library Reading Challenge</title>
+</head>
+<body>
+<h2>Sign Up</h2>
+<form id="signupForm">
+  <input type="text" id="borrowerNumber" placeholder="Borrower Number" required><br>
+  <input type="text" id="name" placeholder="Full Name" required><br>
+  <input type="email" id="email" placeholder="Email" required><br>
+  <input type="password" id="password" placeholder="Password" required><br>
+  <button type="submit">Sign Up</button>
+</form>
+<div id="message"></div>
+
+<script>
+const endpoint = 'https://script.google.com/macros/s/AKfycbwdVUVEBlUXk4P4zJ-tV6NM-UulEPJMt-QRrWRvagBUQkvjSbgo5Lkmmqz8jaeRy3Xh/exec';
+
+document.getElementById('signupForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const borrowerNumber = document.getElementById('borrowerNumber').value.trim();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+
+  const response = await fetch(`${endpoint}?action=signup`, {
+    method: 'POST',
+    body: JSON.stringify({ borrowerNumber, name, email, password }),
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const data = await response.json();
+  document.getElementById('message').textContent = data.message;
+  if(data.success) window.location.href = 'login.html';
+});
+</script>
+</body>
+</html>
