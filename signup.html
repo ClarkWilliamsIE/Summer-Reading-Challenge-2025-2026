@@ -20,22 +20,30 @@ const endpoint = 'https://script.google.com/macros/s/AKfycbwdVUVEBlUXk4P4zJ-tV6N
 
 document.getElementById('signupForm').addEventListener('submit', async e => {
   e.preventDefault();
+
   const borrowerNumber = document.getElementById('borrowerNumber').value.trim();
   const name = document.getElementById('name').value.trim();
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value.trim();
 
-try {
+  try {
     const response = await fetch(`${endpoint}?action=signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ borrowerNumber, name, email, password })
-    });  const data = await response.json();
-  
-  document.getElementById('message').textContent = data.message;
-  if(data.success) window.location.href = 'login.html';
+    });
+
+    const data = await response.json();
+    document.getElementById('message').textContent = data.message;
+
+    if (data.success) window.location.href = 'login.html';
+  } catch (err) {
+    document.getElementById('message').textContent = 'Error: ' + err.message;
+  }
 });
 </script>
+
 </body>
 </html>
+
 
