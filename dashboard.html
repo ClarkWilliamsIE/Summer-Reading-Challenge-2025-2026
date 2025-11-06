@@ -267,6 +267,15 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
 
   // Update DB first
   console.log(currentUser.user_name);
+  const response = await supabase
+  .from('Userdetails')
+  .update({ minutes_logged: currentUser.minutes_logged + minutes })
+  .eq('id', currentUser.id)
+  .select(); // no .single()
+
+console.log('Full response:', response);
+
+  /*
   const { data: updatedUser, error } = await supabase
     .from('Userdetails')
     .update({ minutes_logged: currentUser.minutes_logged + minutes })
@@ -277,7 +286,7 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
   if (error) {
     msg.textContent = 'Error logging minutes: ' + error.message;
     return;
-  }
+  }*/
 
   // Update local state
   currentUser = updatedUser;
@@ -296,6 +305,7 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
 
 </body>
 </html>
+
 
 
 
