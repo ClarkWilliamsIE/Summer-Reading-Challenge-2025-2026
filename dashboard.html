@@ -255,38 +255,39 @@
   });
 
   // Log minutes
-  document.getElementById('logMinutesBtn').addEventListener('click', async () => {
-    const minutes = parseInt(document.getElementById('minutesInput').value);
-    const msg = document.getElementById('logMessage');
-    msg.textContent = '';
+document.getElementById('logMinutesBtn').addEventListener('click', async () => {
+  const minutes = parseInt(document.getElementById('minutesInput').value);
+  const msg = document.getElementById('logMessage');
+  msg.textContent = '';
 
-    if (isNaN(minutes) || minutes < 1 || minutes > 120) {
-      msg.textContent = 'Please enter a valid number of minutes (1-120).';
-      return;
-    }
+  if (isNaN(minutes) || minutes < 1 || minutes > 120) {
+    msg.textContent = 'Please enter a valid number of minutes (1-120).';
+    return;
+  }
 
-    const newTotal = currentUser.minutes_logged + minutes;
+  // Update DB first
+  const { data: updatedUser, error } = await supabase
+    .from('Userdetails')
+    .update({ minutes_logged: currentUser.minutes_logged + minutes })
+    .eq('id', currentUser.id)
+    .select() // <-- ensures we get the updated record back
+    .single();
 
-    const { error } = await supabase
-      .from('Userdetails')
-      .update({ minutes_logged: newTotal })
-      .eq('id', currentUser.id);
+  if (error) {
+    msg.textContent = 'Error logging minutes: ' + error.message;
+    return;
+  }
 
-    if (error) {
-      msg.textContent = 'Error logging minutes: ' + error.message;
-      return;
-    }
+  // Update local state
+  currentUser = updatedUser;
+  document.getElementById('userMinutes').textContent = `${currentUser.minutes_logged} minutes`;
 
-    // Update local state & UI
-    currentUser.minutes_logged = newTotal;
-    document.getElementById('userMinutes').textContent = `${newTotal} minutes`;
+  // Reset input
+  document.getElementById('minutesInput').value = '';
 
-    // Reset input
-    document.getElementById('minutesInput').value = '';
-
-    // Reload dashboard to update leaderboard and community total
-    await loadDashboard();
-  });
+  // Reload leaderboard & community progress (no need to refetch current user)
+  await loadDashboard();
+});
 
   // Run on page load
   loadDashboard();
@@ -294,4 +295,5 @@
 
 </body>
 </html>
+
 
