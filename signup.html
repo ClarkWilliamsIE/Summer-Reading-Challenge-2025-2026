@@ -33,6 +33,13 @@
       margin-top: 10px;
       font-weight: bold;
     }
+    .link-btn {
+      background: #6c757d;
+      margin-top: 10px;
+    }
+    .link-btn:hover {
+      background: #5a6268;
+    }
   </style>
 </head>
 <body>
@@ -42,19 +49,18 @@
   <form id="signupForm">
     <input type="text" id="user_name" placeholder="Username" required><br>
     <input type="password" id="password" placeholder="Password" required><br>
-    <input type="email" id="email_address" placeholder="email_address (optional)"><br>
+    <input type="email" id="email_address" placeholder="Email address (optional)"><br>
     <input type="text" id="phone_number" placeholder="Phone number (optional)"><br>
     <button type="submit">Sign Up</button>
   </form>
 
+  <button class="link-btn" onclick="window.location.href='login.html'">Already have an account? Log In</button>
+
   <div id="message"></div>
 
   <script>
-    // 🚨 Replace these with your Supabase project credentials
-    const SUPABASE_URL = 'https://hfugnpqguidgosxyuioj.supabase.co'; // 🔑 Your project URL
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmdWducHFndWlkZ29zeHl1aW9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0NjE3ODAsImV4cCI6MjA3ODAzNzc4MH0.eawP-KaZTXOAE_OSYeJR6Ds_c6aKsqOsXo_EGifgtrU'; // 🔑 Your anon public key
-
-    // Initialize Supabase client
+    const SUPABASE_URL = 'https://hfugnpqguidgosxyuioj.supabase.co';
+    const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY_HERE'; // replace with your anon key
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     document.getElementById('signupForm').addEventListener('submit', async (e) => {
@@ -65,10 +71,9 @@
       const email_address = document.getElementById('email_address').value.trim() || null;
       const phone_number = document.getElementById('phone_number').value.trim() || null;
 
-      // ✅ Require at least one contact method
       if (!email_address && !phone_number) {
         document.getElementById('message').textContent =
-          'Please provide either an email_address or phone number.';
+          'Please provide either an email address or phone number.';
         return;
       }
 
@@ -77,16 +82,14 @@
       try {
         const { data, error } = await supabase
           .from('Userdetails')
-          .insert([
-            {
-              user_name,
-              password,
-              email_address,
-              phone_number,
-              last_login: new Date().toISOString(),
-              minutes_logged: 0
-            }
-          ]);
+          .insert([{
+            user_name,
+            password,
+            email_address,
+            phone_number,
+            last_login: new Date().toISOString(),
+            minutes_logged: 0
+          }]);
 
         if (error) {
           if (error.code === '23505') {
@@ -96,9 +99,7 @@
         }
 
         document.getElementById('message').textContent = 'Signup successful! Redirecting...';
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 1500);
+        setTimeout(() => window.location.href = 'login.html', 1500);
 
       } catch (err) {
         document.getElementById('message').textContent = 'Error: ' + err.message;
@@ -108,5 +109,3 @@
 
 </body>
 </html>
-
-
