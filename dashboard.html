@@ -267,23 +267,16 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
 
   // Update DB first
   console.log(currentUser.user_name);
+  console.log(currentUser.minutes_logged);
   const response = await supabase
   .from('Userdetails')
   .update({ minutes_logged: currentUser.minutes_logged + minutes })
   .eq('user_name', currentUser.user_name)
   .select(); // no .single()
   .single();
-  console.log(currentUser.id);
+  console.log(minutes_logged);
   console.log('Full response:', response);
-
-  /*
-  const { data: updatedUser, error } = await supabase
-    .from('Userdetails')
-    .update({ minutes_logged: currentUser.minutes_logged + minutes })
-    .eq('id', currentUser.id)
-    .select() // <-- ensures we get the updated record back
-    .single();
-
+  
   if (error) {
     msg.textContent = 'Error logging minutes: ' + error.message;
     return;
@@ -295,7 +288,7 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
 
   // Reset input
   document.getElementById('minutesInput').value = '';
-  */
+  
   // Reload leaderboard & community progress (no need to refetch current user)
   await loadDashboard();
 });
@@ -306,6 +299,7 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
 
 </body>
 </html>
+
 
 
 
