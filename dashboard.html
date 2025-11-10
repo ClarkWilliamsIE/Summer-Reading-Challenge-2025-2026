@@ -270,9 +270,9 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
   const response = await supabase
   .from('Userdetails')
   .update({ minutes_logged: currentUser.minutes_logged + minutes })
-  .eq('id', currentUser.id)
+  .eq('user_name', currentUser.user_name)
   .select(); // no .single()
-
+  console.log(currentUser.id);
   console.log('Full response:', response);
 
   /*
@@ -305,6 +305,7 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
 
 </body>
 </html>
+
 
 
 
