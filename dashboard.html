@@ -272,15 +272,10 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
   .from('Userdetails')
   .update({ minutes_logged: currentUser.minutes_logged + minutes })
   .eq('user_name', currentUser.user_name)
-  .select() // no .single()
+  .select()
   .single();
-  console.log(minutes_logged);
+  console.log(currentUser.minutes_logged);
   console.log('Full response:', response);
-  
-  if (error) {
-    msg.textContent = 'Error logging minutes: ' + error.message;
-    return;
-  }
 
   // Update local state
   currentUser = updatedUser;
@@ -299,6 +294,7 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
 
 </body>
 </html>
+
 
 
 
