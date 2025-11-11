@@ -1,3 +1,151 @@
+/* --- Global Imports & Variables --- */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Nunito+Sans:wght@400;600&display=swap');
+
+:root {
+  --font-heading: 'Lora', serif;
+  --font-body: 'Nunito Sans', sans-serif;
+  
+  --color-background: #fdfaf6; /* Warm book-page cream */
+  --color-surface: #ffffff;      /* Clean white for cards */
+  --color-text: #333333;
+  --color-text-muted: #555555;
+
+  --color-primary: #0C3B66;    /* Deep academic blue */
+  --color-primary-dark: #082a4a;
+  --color-accent: #EAA221;      /* Rich gold */
+
+  --color-success: #28a745;
+  --color-error: #dc3545;
+  
+  --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-strong: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --radius: 8px;
+}
+
+/* --- Global Styles --- */
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  margin-top: 0;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(12, 59, 102, 0.15);
+}
+
+
+/* --- Login Page Styles --- */
+.login-container {
+  background: var(--color-surface);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-strong);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.login-container > p {
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+button[type="submit"] {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover {
+  background: var(--color-primary-dark);
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+button[type="submit"]:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.signup-link {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+#message {
+  margin-top: 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.message-success { color: var(--color-success); }
+.message-error { color: var(--color-error); }
+
 /* --- Dashboard Styles --- */
 
 /* Main Header */
@@ -23,10 +171,11 @@
   position: relative;
   width: 40px;
   height: 40px;
-  background-color: #007bff;
+  background-color: var(--color-primary);
   color: white;
   font-weight: bold;
   font-size: 20px;
+  font-family: var(--font-body);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,10 +188,10 @@
   position: absolute;
   top: 50px;
   right: 0;
-  background: white;
+  background: var(--color-surface);
   border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-strong);
   overflow: hidden;
   z-index: 10;
   width: 120px;
@@ -56,6 +205,7 @@
   cursor: pointer;
   text-align: left;
   font-size: 0.9rem;
+  font-family: var(--font-body);
 }
 
 .dropdown button:hover {
@@ -74,30 +224,30 @@
 
 /* Card Styling */
 .card {
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-light);
   padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card h2 {
-  margin-top: 0;
-  font-size: 1.75rem;
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-strong);
 }
 
 .card h3 {
-  margin-top: 0;
   border-bottom: 1px solid #eee;
   padding-bottom: 0.75rem;
-  color: #333;
 }
 
 /* User Minutes Card */
 #userMinutesCard p {
   font-size: 2.5rem;
   font-weight: 600;
-  color: #007bff;
+  color: var(--color-accent); /* Gold for highlight */
   margin: 1rem 0 0 0;
+  font-family: var(--font-body);
 }
 
 /* Leaderboard Card */
@@ -122,10 +272,10 @@
   font-weight: bold;
   color: white;
   border-radius: 50%;
-  background-color: #6c757d; /* Default color */
+  background-color: var(--color-primary); /* Blue default */
   flex-shrink: 0;
+  font-family: var(--font-body);
 }
-/* Top 3 colors */
 .leaderboard-entry:nth-child(1) .leaderboard-profile { background-color: #ffd700; color: #333; } /* Gold */
 .leaderboard-entry:nth-child(2) .leaderboard-profile { background-color: #c0c0c0; color: #333; } /* Silver */
 .leaderboard-entry:nth-child(3) .leaderboard-profile { background-color: #cd7f32; } /* Bronze */
@@ -140,11 +290,11 @@
 
 .leaderboard-bar {
   height: 100%;
-  background-color: #007bff;
+  background-color: var(--color-accent); /* Gold for data */
   white-space: nowrap;
   padding: 0 8px;
   box-sizing: border-box;
-  color: white;
+  color: var(--color-text); /* Dark text on gold */
   font-size: 0.8rem;
   line-height: 20px;
   transition: width 0.3s ease;
@@ -153,13 +303,14 @@
 .leaderboard-label {
   font-weight: bold;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--color-text);
+  font-family: var(--font-body);
 }
 
 /* Community Card */
 #communityProgressText {
   font-size: 1rem;
-  color: #555;
+  color: var(--color-text-muted);
   margin: 0 0 0.75rem 0;
 }
 
@@ -172,19 +323,15 @@ progress[id="communityProgressBar"] {
   border-radius: 10px;
   overflow: hidden;
 }
-
-/* Progress bar for Chrome/Safari */
 progress[id="communityProgressBar"]::-webkit-progress-bar {
   background-color: #f0f0f0;
   border-radius: 10px;
 }
 progress[id="communityProgressBar"]::-webkit-progress-value {
-  background-color: #28a745; /* Green */
+  background-color: var(--color-accent); /* Gold for data */
 }
-
-/* Progress bar for Firefox */
 progress[id="communityProgressBar"]::-moz-progress-bar {
-  background-color: #28a745; /* Green */
+  background-color: var(--color-accent); /* Gold for data */
   border-radius: 10px;
 }
 
@@ -196,16 +343,13 @@ progress[id="communityProgressBar"]::-moz-progress-bar {
 
 .log-form input[type="number"] {
   flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
 button.submit-minutes {
-  background-color: #28a745;
+  background-color: var(--color-primary); /* Blue for action */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius);
   padding: 10px 15px;
   font-weight: 600;
   cursor: pointer;
@@ -213,12 +357,12 @@ button.submit-minutes {
 }
 
 button.submit-minutes:hover {
-  background-color: #218838;
+  background-color: var(--color-primary-dark);
 }
 
 #logMessage {
   margin-top: 1rem;
   font-weight: 600;
   font-size: 0.9rem;
-  color: #dc3545; /* Red for errors */
+  color: var(--color-error);
 }
