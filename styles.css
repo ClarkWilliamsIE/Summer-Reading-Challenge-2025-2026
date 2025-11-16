@@ -532,3 +532,35 @@ button.small-btn {
 button.small-btn:hover {
   background: #e0e0e0;
 }
+/* --- Responsive Media Queries --- */
+
+/* On screens 600px or wider (tablets and desktops) */
+@media (min-width: 600px) {
+
+  .main-header {
+    padding: 1.5rem 2rem; /* Restore desktop padding */
+  }
+  
+  .main-header h1 {
+    font-size: 1.75rem; /* Restore desktop font size */
+  }
+
+  .dashboard-grid {
+    /* Use your responsive grid layout again */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; /* Restore desktop gap */
+    padding: 2rem; /* Restore desktop padding */
+  }
+  
+  .card {
+     padding: 1.5rem 2rem; /* Restore desktop padding */
+  }
+
+  /* Re-enable hover effect only on devices that *can* hover */
+  @media (hover: hover) {
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-strong);
+    }
+  }
+}
