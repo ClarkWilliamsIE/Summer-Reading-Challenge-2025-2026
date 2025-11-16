@@ -5,7 +5,7 @@
   --font-main: 'Quicksand', sans-serif;
   
   --color-background: #f8f9fa; /* Super light, clean background */
-  --color-surface: #ffffff;      /* Clean white for cards */
+  --color-surface: #ffffff;     /* Clean white for cards */
   --color-text: #34495e;       /* Dark, slightly soft text */
   --color-text-muted: #7f8c8d;
 
@@ -30,7 +30,7 @@ body {
   place-items: center;
   min-height: 100vh;
   margin: 0;
-  padding: 20px;
+  padding: 0; /* Changed for mobile-first */
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
@@ -54,7 +54,8 @@ a:hover {
 
 input[type="email"],
 input[type="password"],
-input[type="number"] {
+input[type="number"],
+select { /* Added select */
   width: 100%;
   padding: 14px 16px;
   border: 1px solid #ddd;
@@ -68,7 +69,8 @@ input[type="number"] {
 
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+select:focus { /* Added select */
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.2);
@@ -84,6 +86,8 @@ input[type="number"]:focus {
   width: 100%;
   max-width: 420px;
   text-align: center;
+  margin: 1rem; /* Add margin for small screens */
+  box-sizing: border-box;
 }
 
 .login-container > p {
@@ -158,7 +162,7 @@ button[type="submit"]:disabled {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1.5rem 1rem;
+  padding: 1rem; /* Changed for mobile-first */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -167,7 +171,7 @@ button[type="submit"]:disabled {
 }
 
 .main-header h1 {
-  font-size: 1.75rem;
+  font-size: 1.5rem; /* Changed for mobile-first */
 }
 
 /* Profile Icon & Dropdown */
@@ -221,11 +225,13 @@ button[type="submit"]:disabled {
 /* Dashboard Grid Layout */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+  grid-template-columns: 1fr; /* Changed for mobile-first */
+  gap: 1rem; /* Changed for mobile-first */
+  padding: 1rem; /* Changed for mobile-first */
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%; /* Added */
+  box-sizing: border-box; /* Added */
 }
 
 /* Card Styling */
@@ -233,13 +239,14 @@ button[type="submit"]:disabled {
   background: var(--color-surface);
   border-radius: 16px; /* Bubbly */
   box-shadow: var(--shadow-light);
-  padding: 1.5rem 2rem;
+  padding: 1.5rem; /* Changed for mobile-first */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-strong);
+  /* Disabled hover on mobile */
+  transform: none;
+  box-shadow: var(--shadow-light);
 }
 
 .card h3 {
@@ -379,7 +386,6 @@ button.submit-minutes:hover {
 }
 
 /* --- New Feature Mockup Styles --- */
-/* (Add this to the end of your style.css) */
 
 /* Streak Card */
 #streakCard {
@@ -450,8 +456,9 @@ button.submit-minutes:hover {
 /* Bookshelf Card */
 .card-header-tabs {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Stack on mobile */
+  align-items: flex-start;
+  gap: 1rem; /* Add gap for stacked items */
   border-bottom: 2px solid #eee;
   padding-bottom: 0.75rem;
   margin-bottom: 1rem;
@@ -464,6 +471,7 @@ button.submit-minutes:hover {
 .tabs {
   display: flex;
   gap: 0.5rem;
+  width: 100%; /* Make tabs fill width */
 }
 .tab-btn {
   font-family: var(--font-main);
@@ -474,6 +482,7 @@ button.submit-minutes:hover {
   background: #f0f0f0;
   border-radius: var(--radius);
   cursor: pointer;
+  flex-grow: 1; /* Make buttons equal width */
 }
 .tab-btn.active {
   background: var(--color-primary);
@@ -488,8 +497,9 @@ button.submit-minutes:hover {
 }
 .book-entry {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Stack on mobile */
+  align-items: flex-start;
+  gap: 0.25rem;
   border-bottom: 1px solid #f0f0f0;
   padding: 0.75rem 0;
 }
@@ -532,7 +542,9 @@ button.small-btn {
 button.small-btn:hover {
   background: #e0e0e0;
 }
-/* --- Responsive Media Queries --- */
+
+
+/* --- Responsive Media Queries (NEW) --- */
 
 /* On screens 600px or wider (tablets and desktops) */
 @media (min-width: 600px) {
@@ -554,6 +566,26 @@ button.small-btn:hover {
   
   .card {
      padding: 1.5rem 2rem; /* Restore desktop padding */
+  }
+  
+  .card-header-tabs {
+    flex-direction: row; /* Row layout on desktop */
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .tabs {
+    width: auto; /* Auto width on desktop */
+  }
+  
+  .tab-btn {
+    flex-grow: 0; /* Auto width buttons */
+  }
+  
+  .book-entry {
+    flex-direction: row; /* Row layout on desktop */
+    justify-content: space-between;
+    align-items: center;
   }
 
   /* Re-enable hover effect only on devices that *can* hover */
